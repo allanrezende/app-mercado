@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>App Mercado</title>
+    <link rel="shortcut icon" href="#" />
+    <link href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/vendor/twbs/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+            <div class="container">
+                <a class="navbar-brand mb-0 h1" href="/">
+                    <i class="bi bi-shop-window text-primary"></i>
+                    App Mercado
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/venda">Venda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/produto">Produto</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/produto-tipo">Tipo de produto</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="pt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    {CONTENT}
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="/vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

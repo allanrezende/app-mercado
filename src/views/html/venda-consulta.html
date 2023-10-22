@@ -1,0 +1,29 @@
+<div class="d-grid gap-2 d-md-flex mb-4 justify-content-md-end">
+    <a class="btn btn-success" href="/venda/cadastro">
+        <i class="bi bi-plus-lg"></i>
+        Adicionar
+    </a>
+</div>
+
+<form name="formVenda" class="mb-4" method="GET">
+    <fieldset>
+        <legend class="mb-4">Venda</legend>
+        <div class="row mb-3">
+            <label for="formVendaId" class="col-sm-2 col-form-label">Nome</label>
+            <div class="col-sm-10">
+                <input type="search" class="form-control" name="termo" id="formVendaId" placeholder="Informe o identificador da venda" value="{TERMO_PESQUISA}">
+            </div>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="button" class="btn btn-light">Limpar</button>
+            <button type="submit" id="btConsultarProduto" class="btn btn-primary">
+                <i class="bi bi-search"></i>
+                Pesquisar
+            </button>
+        </div>
+    </fieldset>
+</form>
+
+{LIST_ITEM_CONSULTA}
+
+<script src="/src/views/js/produto.js"></script>

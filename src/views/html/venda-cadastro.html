@@ -1,0 +1,48 @@
+<div class="d-grid gap-2 d-md-flex mb-4">
+    <a class="btn btn-outline-primary" href="/venda">
+        <i class="bi bi-chevron-left"></i>
+        Voltar
+    </a>
+</div>
+
+<form name="formVenda" method="POST" class="mb-4">
+    <fieldset>
+        <legend class="mb-4">Venda</legend>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Identificador</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="id" value="{ID}" disabled>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="formProdutoProdutoTipoNome" class="col-sm-2 col-form-label">Produto</label>
+            <div class="col-sm-10">
+                <div class="input-group" id="divProdutoTipoSelecionado" style="display: none;">
+                    <input type="text" class="form-control" value="{PRODUTO_TIPO_NOME}" id="formProdutoProdutoTipoNomeSelecionado"
+                        aria-label="Remover seleção de tipo de produto" aria-describedby="btRemoverSelecaoProdutoTipo" disabled>
+                    <button class="btn btn-outline-secondary" type="button" id="btRemoverSelecaoProdutoTipo">
+                        <i class="bi bi-x-lg"></i>  
+                    </button>
+                </div>
+                <div class="input-group" id="divPesquisaProdutoTipo">
+                    <input type="text" class="form-control" id="formProdutoProdutoTipoNome"
+                        placeholder="Pesquisar tipo de produto" aria-label="Pesquisar tipo de produto"
+                        aria-describedby="btConsultarProdutoTipo">
+                    <button class="btn btn-outline-primary" type="button" id="btConsultarProdutoTipo">
+                        <i class="bi bi-plus-lg"></i> Adicionar
+                    </button>
+                </div>
+                <div id="resultadoPesquisaProdutoTipo"></div>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="button" class="btn btn-light">Limpar</button>
+            <button type="submit" class="btn btn-primary" id="btSalvarProdutoTipo">Salvar</button>
+        </div>
+    </fieldset>
+</form>
+
+{ALERT}
+
+<script src="/src/views/js/produto-cadastro.js"></script>
