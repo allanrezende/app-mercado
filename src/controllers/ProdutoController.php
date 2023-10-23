@@ -5,8 +5,10 @@ namespace AllanRezende\AppMercado\Controllers;
 use AllanRezende\AppMercado\Models\Produto;
 use AllanRezende\AppMercado\Repositories\ProdutoRepository;
 use AllanRezende\AppMercado\Repositories\ProdutoTipoRepository;
+use AllanRezende\AppMercado\Views\Components\ListComponent;
 use AllanRezende\AppMercado\Views\ProdutoRegisterView;
 use AllanRezende\AppMercado\Views\ProdutoSearchView;
+use InvalidArgumentException;
 
 class ProdutoController {
 
@@ -18,7 +20,7 @@ class ProdutoController {
         return $view->render();
     }
 
-    public static function renderRegisterView(array $params = []): string {
+    public static function renderRegisterView(array $params = [], ?string $error = ""): string {
 
         $id = $params["id"] ?? null;
 
@@ -34,22 +36,58 @@ class ProdutoController {
             }
          }
 
-        $view = new ProdutoRegisterView($params);
+        $view = new ProdutoRegisterView($params, $error);
         return $view->render();
+    }
+
+    public static function renderSearchResultsView(array $params = []): string {
+        $produtoRepository = new ProdutoRepository();
+        $data = $produtoRepository->findAll($params);
+
+        $items = [];
+        
+        foreach ($data as $produto) {
+            $item = [];
+            $item["name"] = $produto["nome"];
+            $item["id"] = $produto["id"];
+            $items[] = $item;
+        }
+
+        $listComponent = new ListComponent($items);
+        return $listComponent->parse();
     }
 
     public static function register(array $params): Produto {
 
         $produtoRepository = new ProdutoRepository();
-        $item = $produtoRepository->getObjectByRow($params);
 
-        if (!empty($item->getId())) {
-            $produtoTipo = $produtoRepository->update($item);
+        $id = $params["id"] ?? null;
+        $nome = $params["nome"] ?? null;
+        $produtoTipoId = $params["produto_tipo_id"] ?? null;
+        $valor = $params["valor"] ?? null;
+
+        if ($id) {
+            $produto = $produtoRepository->findOne($id);
         } else {
-            $produtoTipo = $produtoRepository->insert($item);
+            $produto = new Produto();
+            $produto->setDataCriacao(date("Y-m-d H:i:s"));
         }
 
-        return $produtoTipo;
+        if (empty($nome)) throw new InvalidArgumentException("O nome do produto deve ser informado.");
+        if (empty($produtoTipoId)) throw new InvalidArgumentException("O tipo do produto deve ser selecionado.");
+        if ($valor === null) throw new InvalidArgumentException("O valor do produto deve ser informado.");
+
+        $produto->setNome($nome);
+        $produto->setProdutoTipoId($produtoTipoId);
+        $produto->setValor($valor);
+
+        if ($id) {
+            $produto = $produtoRepository->update($produto);
+        } else {
+            $produto = $produtoRepository->insert($produto);
+        }
+
+        return $produto;
     }
 
     public static function remove(int $id): bool {

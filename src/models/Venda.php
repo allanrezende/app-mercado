@@ -4,8 +4,8 @@ namespace AllanRezende\AppMercado\Models;
 
 class Venda  {
 
-    private ?int $id;
-    private ?string $data_criacao;
+    private ?int $id = null;
+    private ?string $data_criacao = null;
 
     /**
      * Get the value of id

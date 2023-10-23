@@ -7,10 +7,17 @@ use raelgc\view\Template;
 
 class ProdutoRegisterView extends AbstractView {
 
-    public function __construct(array $data = []) {
+    public function __construct(array $data = [], ?string $error = "") {
         
         $this->template = new Template(__DIR__ . "/html/produto-cadastro.html");
         $this->handle($data);
+        if ($error) $this->handleError($error);
+    }
+
+    private function handleError(string $error) {
+        
+        $alertComponent = new AlertComponent(["type" => "danger", "message" => $error]);
+        $this->template->ALERT = $alertComponent->parse();
     }
 
     private function handle(array $data = []): void {

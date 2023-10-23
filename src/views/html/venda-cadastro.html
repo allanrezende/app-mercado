@@ -10,29 +10,49 @@
         <legend class="mb-4">Venda</legend>
         <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Identificador</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="id" value="{ID}" disabled>
+            <div class="col-sm-3">
+                <input type="text" readonly class="form-control-plaintext fw-bold" name="id" placeholder="#" value="{ID}">
             </div>
         </div>
         <div class="row mb-3">
-            <label for="formProdutoProdutoTipoNome" class="col-sm-2 col-form-label">Produto</label>
+            <div class="col-sm-12" id="resultadoProdutoVenda"></div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="formVendaProdutoNome" class="col-sm-2 col-form-label">Produto</label>
             <div class="col-sm-10">
-                <div class="input-group" id="divProdutoTipoSelecionado" style="display: none;">
-                    <input type="text" class="form-control" value="{PRODUTO_TIPO_NOME}" id="formProdutoProdutoTipoNomeSelecionado"
-                        aria-label="Remover seleção de tipo de produto" aria-describedby="btRemoverSelecaoProdutoTipo" disabled>
-                    <button class="btn btn-outline-secondary" type="button" id="btRemoverSelecaoProdutoTipo">
-                        <i class="bi bi-x-lg"></i>  
+                <div class="input-group" id="divProdutoSelecionado" style="display: none;">
+                    <input type="hidden" name="produto_id"/>
+                    <input type="text" class="form-control" id="formVendaProdutoNomeSelecionado"
+                        aria-label="Remover seleção de produto" aria-describedby="btRemoverSelecaoProduto" disabled>
+                    <button class="btn btn-outline-secondary" type="button" id="btRemoverSelecaoProduto">
+                        <i class="bi bi-x-lg"></i>
                     </button>
                 </div>
-                <div class="input-group" id="divPesquisaProdutoTipo">
-                    <input type="text" class="form-control" id="formProdutoProdutoTipoNome"
-                        placeholder="Pesquisar tipo de produto" aria-label="Pesquisar tipo de produto"
-                        aria-describedby="btConsultarProdutoTipo">
-                    <button class="btn btn-outline-primary" type="button" id="btConsultarProdutoTipo">
-                        <i class="bi bi-plus-lg"></i> Adicionar
+                <div class="input-group" id="divPesquisaProduto">
+                    <input type="text" class="form-control" id="formVendaProdutoNome"
+                        placeholder="Pesquisar produto" aria-label="Pesquisar produto"
+                        aria-describedby="btConsultarProduto">
+                    <button class="btn btn-outline-primary" type="button" id="btConsultarProduto">
+                        <i class="bi bi-search"></i>
                     </button>
                 </div>
-                <div id="resultadoPesquisaProdutoTipo"></div>
+                <div id="resultadoPesquisaProduto"></div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Quantidade</label>
+            <div class="col-sm-3">
+                <input type="number" min="0" step="any" lang="pt-BR" class="form-control" name="quantidade" disabled>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="offset-sm-2 col-sm-10">
+                <button type="button" id="btAdicionarProduto" class="btn btn-outline-success" disabled>
+                    <i class="bi bi-plus-lg"></i> Adicionar
+                </button>
             </div>
         </div>
 
@@ -45,4 +65,4 @@
 
 {ALERT}
 
-<script src="/src/views/js/produto-cadastro.js"></script>
+<script src="/src/views/js/venda-cadastro.js"></script>

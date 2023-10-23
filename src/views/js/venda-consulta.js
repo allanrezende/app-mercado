@@ -1,9 +1,9 @@
-var produto = (function() {
+var telaVendaConsulta = (function() {
 
     var privado = {};
     var publico = {};
 
-    var domForm = document.formProduto;
+    var domForm = document.formVenda;
 
     privado.consultarSeTeclaEnter = function(event) {
         if (event.keyCode == 13) {
@@ -12,7 +12,7 @@ var produto = (function() {
     }
 
     privado.inicializar = function() {
-        domForm.nome.onkeypress = privado.consultarSeTeclaEnter;
+        domForm.termo.onkeypress = privado.consultarSeTeclaEnter;
     };
 
     document.addEventListener("DOMContentLoaded", privado.inicializar );

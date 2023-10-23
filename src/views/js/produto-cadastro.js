@@ -1,4 +1,4 @@
-var produtoCadastro = (function() {
+var telaProdutoCadastro = (function() {
 
     var privado = {};
     var publico = {};
@@ -30,6 +30,7 @@ var produtoCadastro = (function() {
     };
 
     privado.popularProdutoTipo = function(id, nome) {
+        if (!id) return false;
         domForm.produto_tipo_id.value = id;
         document.getElementById('formProdutoProdutoTipoNomeSelecionado').value = nome;
         privado.mostrarProdutoTipoSelecionado();
@@ -75,9 +76,22 @@ var produtoCadastro = (function() {
         }
     };
 
+    privado.limparFormulario = function() {
+        privado.removerProdutoTipoSelecionado();
+        domForm.reset();
+    };
+
+    privado.preventEnter = function(e) {
+        e = e || event;
+        var txtArea = /textarea/i.test((e.target || e.srcElement).tagName);
+        return txtArea || (e.keyCode || e.which || e.charCode || 0) !== 13;
+    }
+
     privado.inicializar = function() {
+        document.querySelector('form').onkeydown = privado.preventEnter;
         document.getElementById('formProdutoProdutoTipoNome').addEventListener('input', privado.pesquisarProdutoTipo);
         domForm.btRemoverSelecaoProdutoTipo.onclick = privado.removerProdutoTipoSelecionado;
+        domForm.btLimparFormulario.onclick = privado.limparFormulario;
         privado.produtoTipoListener();
     };
 

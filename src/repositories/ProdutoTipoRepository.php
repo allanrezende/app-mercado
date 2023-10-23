@@ -42,11 +42,17 @@ class ProdutoTipoRepository {
 
     public function insert(ProdutoTipo $produtoTipo): ProdutoTipo {
 
+        $sqlParams = [
+            "nome" => $produtoTipo->getNome(),
+            "imposto_percentual" => $produtoTipo->getImpostoPercentual(),
+            "data_criacao" => $produtoTipo->getDataCriacao()
+        ];
+
         $sql = "
             INSERT INTO produto_tipo (nome, imposto_percentual, data_criacao)
-            VALUES ('" . $produtoTipo->getNome() . "', " . $produtoTipo->getImpostoPercentual() . ", " . $produtoTipo->getDataCriacao(). ")
+            VALUES (:nome, :imposto_percentual, :data_criacao)
             RETURNING *";
-        $result = $this->connection->query($sql);
+        $result = $this->connection->query($sql, $sqlParams);
         if (count($result) < 1) throw new Exception("Não foi possível criar o registro.");
         $created = $this->getObjectByRow($result[0]);
 
@@ -55,12 +61,20 @@ class ProdutoTipoRepository {
 
     public function update(ProdutoTipo $produtoTipo): ProdutoTipo {
 
+        $sqlParams = [
+            "id" => $produtoTipo->getId(),
+            "nome" => $produtoTipo->getNome(),
+            "imposto_percentual" => $produtoTipo->getImpostoPercentual(),
+            "data_criacao" => $produtoTipo->getDataCriacao()
+        ];
+
         $sql = "
             UPDATE produto_tipo
-            SET nome = '" . $produtoTipo->getNome() . "',
-                imposto_percentual = " . $produtoTipo->getImpostoPercentual(). "
+            SET nome = :nome,
+                imposto_percentual = :imposto_percentual,
+                data_criacao = :data_criacao
             WHERE id = :id RETURNING *";
-        $result = $this->connection->query($sql, ["id" => $produtoTipo->getId()]);
+        $result = $this->connection->query($sql, $sqlParams);
         if (count($result) < 1) throw new Exception("Não foi possível criar o registro.");
         $updated = self::getObjectByRow($result[0]);
 
@@ -77,15 +91,17 @@ class ProdutoTipoRepository {
     public function getObjectByRow(array $row): ProdutoTipo {
 
         if (empty($row)) throw new Exception("Não foi possível popular o objeto pois o parametro está vazio.");
-        $row = array_filter($row);
+        
+        $row = array_filter($row, function($var) {
+            return ($var !== NULL && $var !== "");
+        });
 
         $item = new ProdutoTipo();
-        $id = $row["id"] ?? null;
 
-        $item->setId($id);
+        $item->setId($row["id"] ?? null);
         $item->setNome($row["nome"] ?? null);
         $item->setImpostoPercentual($row["imposto_percentual"] ?? null);
-        $item->setDataCriacao($row["data_criacao"] ?? "now()");
+        $item->setDataCriacao($row["data_criacao"] ?? null);
 
         return $item;
     }

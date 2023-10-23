@@ -6,6 +6,8 @@ use AllanRezende\AppMercado\Repositories\ProdutoTipoRepository;
 use AllanRezende\AppMercado\Views\Components\ListComponent;
 use AllanRezende\AppMercado\Views\ProdutoTipoSearchView;
 use AllanRezende\AppMercado\Views\ProdutoTipoRegisterView;
+use Exception;
+use InvalidArgumentException;
 
 class ProdutoTipoController {
 
@@ -17,7 +19,7 @@ class ProdutoTipoController {
         return $view->render();
     }
 
-    public static function renderRegisterView(array $params = []): string {
+    public static function renderRegisterView(array $params = [], ?string $error = ""): string {
 
         $id = $params["id"] ?? null;
 
@@ -27,11 +29,12 @@ class ProdutoTipoController {
             $params["produtoTipo"] = $produtoTipo;
         }
 
-        $view = new ProdutoTipoRegisterView($params);
+        $view = new ProdutoTipoRegisterView($params, $error);
         return $view->render();
     }
 
     public static function renderSearchResultsView(array $params = []): string {
+
         $produtoTipoRepository = new ProdutoTipoRepository();
         $data = $produtoTipoRepository->findAll($params);
 
@@ -51,12 +54,28 @@ class ProdutoTipoController {
     public static function register(array $params): ProdutoTipo {
         
         $produtoTipoRepository = new ProdutoTipoRepository();
-        $item = $produtoTipoRepository->getObjectByRow($params);
 
-        if (!empty($item->getId())) {
-            $produtoTipo = $produtoTipoRepository->update($item);
+        $id = $params["id"] ?? null;
+        $nome = $params["nome"] ?? null;
+        $impostoPercentual = $params["imposto_percentual"];
+
+        if ($id) {
+            $produtoTipo = $produtoTipoRepository->findOne($id);
         } else {
-            $produtoTipo = $produtoTipoRepository->insert($item);
+            $produtoTipo = new ProdutoTipo();
+            $produtoTipo->setDataCriacao(date("Y-m-d H:i:s"));
+        }
+
+        if (empty($nome)) throw new InvalidArgumentException("O nome deve ser informado.");
+        if ($impostoPercentual === null) throw new InvalidArgumentException("O imposto percentual deve ser informado.");
+
+        $produtoTipo->setNome($nome);
+        $produtoTipo->setImpostoPercentual($impostoPercentual);
+        
+        if ($id) {
+            $produtoTipo = $produtoTipoRepository->update($produtoTipo);
+        } else {
+            $produtoTipo = $produtoTipoRepository->insert($produtoTipo);
         }
 
         return $produtoTipo;

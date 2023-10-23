@@ -19,7 +19,7 @@ class Connection {
         );
     }
 
-    public function query(string $sql, array $params = []) {
+    public function query(string $sql, array $params = [], ?bool $fetchclass = false) {
         if (empty($sql)) throw new Exception("O parametro informando o sql é obrigatório.");
         
         $stmt = $this->pdo->prepare($sql);
@@ -30,6 +30,7 @@ class Connection {
             }
         }
         $stmt->execute();
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

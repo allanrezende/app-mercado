@@ -4,11 +4,11 @@ namespace AllanRezende\AppMercado\Models;
 
 class Produto  {
 
-    private ?int $id;
+    private ?int $id = null;
     private string $nome;
     private int $produto_tipo_id;
     private float $valor;
-    private ?string $data_criacao;
+    private ?string $data_criacao = null;
     
 
     /**

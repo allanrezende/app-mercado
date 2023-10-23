@@ -42,11 +42,19 @@ class ProdutoRepository {
 
     public function insert(Produto $produto): Produto {
 
+        $sqlParams = [
+            "nome" => $produto->getNome(),
+            "produto_tipo_id" => $produto->getProdutoTipoId(),
+            "valor" => $produto->getValor(),
+            "data_criacao" => $produto->getDataCriacao()
+        ];
+
         $sql = "
             INSERT INTO produto (nome, produto_tipo_id, valor, data_criacao)
-            VALUES ('" . $produto->getNome() . "', " . $produto->getProdutoTipoId() . ", " . $produto->getValor() . ", " . $produto->getDataCriacao(). ")
+            VALUES (:nome, :produto_tipo_id, :valor, :data_criacao)
             RETURNING *";
-        $result = $this->connection->query($sql);
+            
+        $result = $this->connection->query($sql, $sqlParams);
         if (count($result) < 1) throw new Exception("Não foi possível criar o registro.");
         $created = $this->getObjectByRow($result[0]);
 
@@ -55,13 +63,23 @@ class ProdutoRepository {
 
     public function update(Produto $produto): Produto {
 
+        $sqlParams = [
+            "id" => $produto->getId(),
+            "nome" => $produto->getNome(),
+            "produto_tipo_id" => $produto->getProdutoTipoId(),
+            "valor" => $produto->getValor(),
+            "data_criacao" => $produto->getDataCriacao()
+        ];
+
         $sql = "
             UPDATE produto
-            SET nome = '" . $produto->getNome() . "',
-                produto_tipo_id = " . $produto->getProdutoTipoId(). ",
-                valor = " . $produto->getValor() . "
+            SET nome = :nome,
+                produto_tipo_id = :produto_tipo_id,
+                valor = :valor,
+                data_criacao = :data_criacao
             WHERE id = :id RETURNING *";
-        $result = $this->connection->query($sql, ["id" => $produto->getId()]);
+
+        $result = $this->connection->query($sql, $sqlParams);
         if (count($result) < 1) throw new Exception("Não foi possível criar o registro.");
         $updated = self::getObjectByRow($result[0]);
 
@@ -78,16 +96,18 @@ class ProdutoRepository {
     public function getObjectByRow(array $row): Produto {
 
         if (empty($row)) throw new Exception("Não foi possível popular o objeto pois o parametro está vazio.");
-        $row = array_filter($row);
+
+        $row = array_filter($row, function($var) {
+            return ($var !== NULL && $var !== "");
+        });
 
         $item = new Produto();
-        $id = $row["id"] ?? null;
 
-        $item->setId($id);
+        $item->setId($row["id"] ?? null);
         $item->setNome($row["nome"] ?? null);
         $item->setProdutoTipoId($row["produto_tipo_id"] ?? null);
         $item->setValor($row["valor"] ?? null);
-        $item->setDataCriacao($row["data_criacao"] ?? "now()");
+        $item->setDataCriacao($row["data_criacao"] ?? null);
 
         return $item;
     }

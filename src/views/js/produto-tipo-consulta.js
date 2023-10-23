@@ -1,4 +1,4 @@
-var produtoTipo = (function() {
+var telaProdutoTipoConsulta = (function() {
 
     var privado = {};
     var publico = {};
@@ -12,7 +12,7 @@ var produtoTipo = (function() {
     }
 
     privado.inicializar = function() {
-        domForm.nome.onkeypress = privado.consultarSeTeclaEnter;
+        domForm.termo.onkeypress = privado.consultarSeTeclaEnter;
     };
 
     document.addEventListener("DOMContentLoaded", privado.inicializar );

@@ -38,7 +38,22 @@ class VendaRepository {
         $item = $this->getObjectByRow($result[0]);
 
         return $item;
-    }  
+    }
+
+    public function insert(Venda $venda): Venda {
+
+        $sqlParams = ["data_criacao" => $venda->getDataCriacao()];
+
+        $sql = "
+            INSERT INTO venda (data_criacao)
+            VALUES (:data_criacao)
+            RETURNING *";
+        $result = $this->connection->query($sql, $sqlParams);
+        if (count($result) < 1) throw new Exception("Não foi possível criar o registro.");
+        $created = $this->getObjectByRow($result[0]);
+
+        return $created;
+    }
 
     public function getObjectByRow(array $row): Venda {
 
@@ -46,10 +61,9 @@ class VendaRepository {
         $row = array_filter($row);
 
         $item = new Venda();
-        $id = $row["id"] ?? null;
 
-        $item->setId($id);
-        $item->setDataCriacao($row["data_criacao"] ?? "now()");
+        $item->setId($row["id"] ?? null);
+        $item->setDataCriacao($row["data_criacao"] ?? null);
 
         return $item;
     }

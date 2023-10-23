@@ -6,10 +6,10 @@ use JsonSerializable;
 
 class ProdutoTipo implements JsonSerializable {
 
-    private ?int $id;
+    private ?int $id = null;
     private string $nome;
     private float $impostoPercentual;
-    private ?string $dataCriacao;
+    private ?string $dataCriacao = null;
 
     /**
      * Get the value of id

@@ -1,0 +1,57 @@
+<div class="card overflow-x-auto">
+    <h5 class="card-header">Produtos</h5>
+    <!-- BEGIN BLOCK_TEM_PRODUTOS -->
+    <table class="table card-body mb-0">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Qtd.</th>
+                <th>Valor unitário</th>
+                <th>Imposto %</th>
+                <th>Valor total</th>
+                <th>Imposto total</th>
+                <th>Valor final</th>
+                <th><th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- BEGIN BLOCK_VENDA_PRODUTO -->
+            <tr>
+                <td>
+                    {PRODUTO_NOME}
+                    <input type="hidden" name="venda_produto_id[{PRODUTO_ID}]" value="{VENDA_PRODUTO_ID}"/>
+                    <input type="hidden" name="venda_produto_quantidade[{PRODUTO_ID}]" value="{VENDA_PRODUTO_QUANTIDADE}"/>
+                    <input type="hidden" name="venda_produto_valor_unitario[{PRODUTO_ID}]" value="{PRODUTO_VALOR}"/>
+                    <input type="hidden" name="venda_produto_imposto_percentual[{PRODUTO_ID}]" value="{PRODUTO_TIPO_IMPOSTO_PERCENTUAL}"/>
+                </td>
+                <td>{VENDA_PRODUTO_QUANTIDADE}</td>
+                <td>R$ {F_PRODUTO_VALOR}</td>
+                <td>{F_PRODUTO_TIPO_IMPOSTO_PERCENTUAL}%</td>
+                <td>R$ {VALOR_PRODUTO_X_QUANTIDADE}</td>
+                <td>R$ {VALOR_IMPOSTO_PRODUTO_X_QUANTIDADE}</td>
+                <td>R$ {SOMA_PRODUTO_X_QUANTIDADE}</td>
+                <td>
+                    <button type="button" class="btn-close btRemoverProduto" aria-label="Remover produto"></button>
+                </td>
+            </tr>
+            <!-- END BLOCK_VENDA_PRODUTO -->
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Total</th>
+                <th>{SOMATORIO_QUANTIDADE}</th>
+                <th>-</th>
+                <th>-</th>
+                <th>R$ {SOMATORIO_VALOR_PRODUTOS}</th>
+                <th>R$ {SOMATORIO_VALOR_IMPOSTO}</th>
+                <th>R$ {SOMATORIO_VALOR_FINAL}</th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+    <!-- END BLOCK_TEM_PRODUTOS -->
+    <div clas="card-body">
+        <p class="m-2">Nenhum produto adicionado.</p>
+    </div>
+    <!-- FINALLY BLOCK_TEM_PRODUTOS -->
+</div>
