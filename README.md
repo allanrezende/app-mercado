@@ -5,3 +5,9 @@ O sistema possui as funcionalidades:
 - Cadastro de venda onde são vinculados os produtos e as quantidades.
 
 A principal função do sistema é calcular o valor total da venda, discriminando os valores de impostos.
+
+# inicialização
+Acessar a raiz do projeto e executar
+```
+php -S localhost:8080
+```
