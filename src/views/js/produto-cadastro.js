@@ -37,7 +37,7 @@ var telaProdutoCadastro = (function() {
     };
 
     privado.atribuiEventosPesquisaProdutoTipo = function() {
-        const items = document.querySelectorAll("#resultadoPesquisaProdutoTipo div a");
+        const items = document.querySelectorAll("#resultadoPesquisaProdutoTipo a");
         for (let item of items){
             item.onclick = function() {
                 privado.popularProdutoTipo(item.getAttribute("data-id"), item.textContent);

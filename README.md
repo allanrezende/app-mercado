@@ -7,7 +7,8 @@ O sistema possui as funcionalidades:
 A principal função do sistema é calcular o valor total da venda, discriminando os valores de impostos.
 
 # inicialização
-Acessar a raiz do projeto e executar
+- Acessar a pasta **config** e renomear o arquivo **.env.example** para **.env**, inserindo nele os parâmetros corretos para acesso ao banco de dados PostgreSQL
+- Na raiz do projeto, executar:
 ```
 php -S localhost:8080
 ```
