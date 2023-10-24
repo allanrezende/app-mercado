@@ -68,7 +68,8 @@ var telaVendaCadastro = (function() {
 
     privado.removeLinhaProduto = function(e) {
         e.target.parentElement.parentElement.remove();
-        privado.atualizaCardVendaProduto();
+        var cleaned = document.querySelectorAll(".btRemoverProduto").length > 0 ? false : true;
+        privado.atualizaCardVendaProduto(cleaned);
     }
 
     privado.atribuiEventosCardVendaProduto = function() {
@@ -78,11 +79,11 @@ var telaVendaCadastro = (function() {
         }
     };
 
-    privado.atualizaCardVendaProduto = function() {
+    privado.atualizaCardVendaProduto = function(cleaned = false) {
 
         let data = new FormData(domForm);
 
-        let queryString = new URLSearchParams(data).toString();
+        let queryString = new URLSearchParams(data).toString() + (cleaned ? "&cleaned=true" : "");
 
         fetch('/venda/card-venda-produto?' + queryString, {
                 method: "POST",

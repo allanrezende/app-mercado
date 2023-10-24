@@ -17,10 +17,14 @@ class VendaProdutoController {
         $produtoTipoRepository = new ProdutoTipoRepository();
         $vendaProdutoRepository = new VendaProdutoRepository();
 
+        $cleaned = $params["cleaned"] ?? false;
+        $produtoId = $params["produto_id"] ?? null;
+        $quantidade = $params["quantidade"] ?? null;
+
         // Popula o vetor de parâmetros com os dados da tabela venda_produto (quando for edição) 
         $vendaId = $params["id"] ?? null;
 
-        if (!empty($vendaId) && !isset($params["venda_produto_id"])) {
+        if (!$cleaned && !empty($vendaId) && !isset($params["venda_produto_id"])) {
             $params = [];
 
             $vendaProdutos = $vendaProdutoRepository->findAll(["venda_id" => $vendaId]);
@@ -38,18 +42,12 @@ class VendaProdutoController {
         $params["venda_produto_quantidade"] = $params["venda_produto_quantidade"] ?? [];
         $params["venda_produto_valor_unitario"] = $params["venda_produto_valor_unitario"] ?? [];
         $params["venda_produto_imposto_percentual"] = $params["venda_produto_imposto_percentual"] ?? [];
-
-        // Adicona o novo produto ao vetor
-        $produtoId = $params["produto_id"] ?? null;
-        $quantidade = $params["quantidade"] ?? null;
         
-        // Adiciona o novo produto no vetor de venda_produto_id
+        // Adiciona o novo produto no vetor de venda_produto_id (soma caso o produto já existir)
         if ($produtoId && $quantidade) {
             $params["venda_produto_id"][$produtoId] = null;
             $params["venda_produto_quantidade"][$produtoId] = ($params["venda_produto_quantidade"][$produtoId] ?? 0) + $quantidade;
         }
-
-        //TODO somar produto já inserido
 
         $data = [];
 

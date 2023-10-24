@@ -25,7 +25,7 @@ class ProdutoTipoRepository {
             }
         }
 
-        $result = $this->connection->query("SELECT * FROM produto_tipo $filter", $queryParams);
+        $result = $this->connection->query("SELECT * FROM produto_tipo $filter ORDER BY nome", $queryParams);
 
         return $result;
     }

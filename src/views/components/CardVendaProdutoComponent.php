@@ -36,6 +36,7 @@ class CardVendaProdutoComponent extends AbstractComponent {
             $this->template->PRODUTO_NOME = $produto->getNome();
             $this->template->PRODUTO_ID = $produto->getId();
             $this->template->VENDA_PRODUTO_ID = $vendaProduto->getId();
+            $this->template->F_VENDA_PRODUTO_QUANTIDADE = $this->numberFormat($vendaProduto->getQuantidade());
             $this->template->VENDA_PRODUTO_QUANTIDADE = $vendaProduto->getQuantidade();
             $this->template->F_PRODUTO_VALOR = $this->numberFormat($vendaProduto->getValorUnitario());
             $this->template->PRODUTO_VALOR = $vendaProduto->getValorUnitario();
@@ -46,7 +47,6 @@ class CardVendaProdutoComponent extends AbstractComponent {
             $this->template->VALOR_IMPOSTO_PRODUTO_X_QUANTIDADE = $this->numberFormat($valorImpostoProdutoQuantidade);
             $this->template->SOMA_PRODUTO_X_QUANTIDADE = $this->numberFormat($somaProdutoQuantidade);
 
-            $somatorio["quantidade"] += $vendaProduto->getQuantidade();
             $somatorio["valor_produtos"] += $valorProdutoQuantidade;
             $somatorio["valor_imposto"] += $valorImpostoProdutoQuantidade;
             $somatorio["valor_total"] += $somaProdutoQuantidade;
@@ -54,7 +54,6 @@ class CardVendaProdutoComponent extends AbstractComponent {
             $this->template->block("BLOCK_VENDA_PRODUTO");
         }
 
-        $this->template->SOMATORIO_QUANTIDADE = $somatorio["quantidade"];
         $this->template->SOMATORIO_VALOR_PRODUTOS = $this->numberFormat($somatorio["valor_produtos"]);
         $this->template->SOMATORIO_VALOR_IMPOSTO = $this->numberFormat($somatorio["valor_imposto"]);
         $this->template->SOMATORIO_VALOR_FINAL = $this->numberFormat($somatorio["valor_total"]);

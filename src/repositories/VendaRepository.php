@@ -25,7 +25,7 @@ class VendaRepository {
             }
         }
 
-        $result = $this->connection->query("SELECT * FROM venda $filter", $queryParams);
+        $result = $this->connection->query("SELECT * FROM venda $filter ORDER BY id DESC", $queryParams);
 
         return $result;
     }

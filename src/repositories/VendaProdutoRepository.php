@@ -19,7 +19,7 @@ class VendaProdutoRepository {
         $queryParams = [];
 
         if (isset($params['venda_id'])) {
-            if (!empty($params['termo'])) {
+            if (!empty($params['venda_id'])) {
                 $filter .= ' WHERE venda_id = :venda_id ';
                 $queryParams['venda_id'] = $params['venda_id'];
             }

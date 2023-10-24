@@ -7,7 +7,7 @@ class VendaProduto {
     private ?int $id = null;
     private ?int $venda_id = null;
     private int $produto_id;
-    private int $quantidade;
+    private float $quantidade;
     private float $valor_unitario;
     private float $imposto_percentual;
 
@@ -74,7 +74,7 @@ class VendaProduto {
     /**
      * Get the value of quantidade
      */ 
-    public function getQuantidade(): int
+    public function getQuantidade(): float
     {
         return $this->quantidade;
     }

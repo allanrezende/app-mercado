@@ -22,7 +22,7 @@ class VendaSearchView extends AbstractView {
         
         foreach ($data as $venda) {
             $item = [];
-            $item["name"] = $venda["id"];
+            $item["name"] = "<strong>#". $venda["id"] ."</strong> - " . date('d-m-Y H:i', strtotime($venda["data_criacao"]));
             $item["link"] = "/venda/cadastro?id=" . $venda["id"];
             $items[] = $item;
         }

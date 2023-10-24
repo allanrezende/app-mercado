@@ -15,13 +15,13 @@ use AllanRezende\AppMercado\Views\HomeView;
 
 $app = new App();
 
-# Home
+# Rota da página inicial
 $app->get('/', function(Request $request, Response $response){
     $homeView = new HomeView();
     $response->send($homeView->render());
 });
 
-# Tipo de produto
+# Rotas da funcionalidade tipo produto
 $app->get('/produto-tipo', function(Request $request, Response $response){
     $response->send(ProdutoTipoController::renderSearchView($request->getParams()));
 });
@@ -45,7 +45,7 @@ $app->post('/produto-tipo/resultado-consulta', function (Request $request, Respo
     $response->send(ProdutoTipoController::renderSearchResultsView($params));
 });
 
-# Produto
+# Rotas da funcionalidade produto
 $app->get('/produto', function(Request $request, Response $response){
     $response->send(ProdutoController::renderSearchView($request->getParams()));
 });
@@ -69,7 +69,8 @@ $app->post('/produto/resultado-consulta', function (Request $request, Response $
     $response->send(ProdutoController::renderSearchResultsView($params));
 });
 
-# Venda
+
+# Rotas da funcionalidade venda
 $app->get('/venda', function(Request $request, Response $response){
     $response->send(VendaController::renderSearchView($request->getParams()));
 });
